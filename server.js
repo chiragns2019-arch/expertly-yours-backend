@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(passport.initialize());
 
 // Routes (to be added)
+app.get("/", (req, res) => {
+  res.send("Expertly Yours Backend is running 🚀");
+});
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API is running' });
 });
