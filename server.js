@@ -1,3 +1,10 @@
+const { execSync } = require("child_process");
+
+try {
+  execSync("npx prisma generate");
+} catch (e) {
+  console.log("Prisma generate skipped");
+}
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
