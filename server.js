@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const { errorHandler } = require('./middleware/errorMiddleware');
@@ -13,10 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 
-// Routes (to be added)
-app.get("/", (req, res) => {
-  res.send("Expertly Yours Backend is running 🚀");
-});
+// Serve the built frontend files
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API is running' });
 });
@@ -29,6 +30,11 @@ app.use('/api/requirements', require('./routes/requirementRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+
+// Catch-all route to serve the frontend index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 // Error Handler
 app.use(errorHandler);
