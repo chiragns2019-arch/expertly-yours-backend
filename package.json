@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
     "build": "echo build complete",
+    "start": "npx prisma generate && node server.js",
     "postinstall": "echo skip prisma",
     "dev": "nodemon server.js",
     "seed": "node prisma/seed.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^7.5.0",
+    "@prisma/client": "^5.22.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
@@ -23,10 +23,10 @@
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "prisma": "^5.22.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "prisma": "^5.22.0"
   }
 }
