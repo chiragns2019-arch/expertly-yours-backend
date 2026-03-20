@@ -112,7 +112,7 @@ const googleAuthCallback = (req, res) => {
   }
   const token = generateToken(req.user.id);
   
-  res.send(process.env.FRONTEND_URL || "Login successful");
+  res.send(process.env.FRONTEND_URL || "Login success");
 };
 
 module.exports = {
