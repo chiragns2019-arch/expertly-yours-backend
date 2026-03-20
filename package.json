@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "echo build complete",
-    "start": "npx -y prisma generate && node server.js",
+    "build": "npx prisma generate",
+    "start": "npx prisma db push && node server.js",
     "postinstall": "echo skip prisma",
     "dev": "nodemon server.js",
     "seed": "node prisma/seed.js",
