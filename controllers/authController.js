@@ -108,13 +108,11 @@ const googleAuthCallback = (req, res) => {
   // Successful authentication, generate token.
   // req.user is set by passport.
   if (!req.user) {
-    return res.redirect((process.env.FRONTEND_URL || 'http://localhost:3000') + '/login?error=auth_failed');
+    return res.send('Auth failed');
   }
   const token = generateToken(req.user.id);
   
-  // Redirect to frontend with token
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-  res.redirect(`${frontendUrl}/login?token=${token}&userId=${req.user.id}&role=${req.user.role}&name=${encodeURIComponent(req.user.name)}`);
+  res.send(process.env.FRONTEND_URL || "Login successful");
 };
 
 module.exports = {
