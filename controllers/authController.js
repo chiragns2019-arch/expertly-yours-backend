@@ -108,12 +108,21 @@ const googleAuthCallback = (req, res) => {
   // Successful authentication, generate token.
   // req.user is set by passport.
   if (!req.user) {
-    return res.send('Auth failed');
+    console.log("Google auth failed: no user on req");
+    return res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
   }
+
   const token = generateToken(req.user.id);
-  
-  const redirectUrl = `${process.env.FRONTEND_URL}?token=${token}`;
-  res.redirect(redirectUrl);
+  console.log("Google auth success. USER:", req.user.id, "TOKEN:", token.slice(0, 20) + "...");
+
+  const params = new URLSearchParams({
+    token,
+    userId: req.user.id,
+    name: req.user.name || '',
+    role: req.user.role || 'SEEKER',
+  });
+
+  res.redirect(`${process.env.FRONTEND_URL}/auth-success?${params.toString()}`);
 };
 
 module.exports = {
