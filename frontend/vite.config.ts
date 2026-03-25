@@ -57,7 +57,6 @@
     },
     build: {
       target: 'esnext',
-      outDir: '../backend/dist',
       emptyOutDir: true
     },
     server: {

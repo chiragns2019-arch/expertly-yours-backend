@@ -16,7 +16,7 @@ export function SignUp() {
   const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'http://localhost:5000/api/auth/google';
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/google`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

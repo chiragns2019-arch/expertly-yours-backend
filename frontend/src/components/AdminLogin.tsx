@@ -53,7 +53,7 @@ export function AdminLogin() {
   const handleGoogleSignIn = () => {
     // Redirect to backend Google OAuth flow
     // The backend should handle the role check after callback
-    window.location.href = 'http://localhost:5000/api/auth/google?admin=true';
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/google?admin=true`;
   };
 
   return (

@@ -24,12 +24,22 @@ app.use(cors({
 app.use(express.json());
 app.use(passport.initialize());
 
-// Serve the built frontend files
-app.use(express.static(path.join(__dirname, "dist")));
+// Static frontend serving removed
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API is running' });
+});
+
+// Testing route to fetch users without auth
+app.get('/api/test', async (req, res, next) => {
+  try {
+    const pool = require('./config/db');
+    const [users] = await pool.query('SELECT id, name, email, role FROM User LIMIT 10');
+    res.json({ status: 'ok', data: users });
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
@@ -45,10 +55,7 @@ app.use('/api/conversations', require('./routes/conversationsRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/meetings', require('./routes/meetingRoutes'));
 
-// Catch-all route to serve the frontend index.html
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
+// Catch-all frontend route removed
 
 // Error Handler
 app.use(errorHandler);
@@ -70,7 +77,7 @@ async function startServer() {
 
     if (!existingAdmin) {
       console.log("Initializing default Admin account...");
-      const bcrypt = require('bcrypt');
+      const bcrypt = require('bcryptjs');
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash("admin123", salt);
       const { randomUUID: uuidv4 } = require('crypto');
